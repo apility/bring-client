@@ -1,0 +1,15 @@
+{
+    "name": "apility/bring-client",
+    "require": {
+        "netflex/api": "^3.1",
+        "illuminate/support": "^8.33"
+    },
+    "autoload": {
+        "psr-4": {
+            "Apility\\Bring\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    }
+}
