@@ -1,8 +1,11 @@
 {
     "name": "apility/bring-client",
+    "description": "Bring API Client for the Netflex SDK",
+    "type": "library",
+    "license": "MIT",
     "require": {
-        "netflex/api": "^3.1",
-        "illuminate/support": "^8.33"
+        "netflex/api": "^3.0",
+        "illuminate/support": "^8.0"
     },
     "autoload": {
         "psr-4": {
@@ -11,5 +14,15 @@
         "files": [
             "src/helpers.php"
         ]
+    },
+    "extra": {
+        "laravel": {
+          "providers": [
+            "Apility\\Bring\\Providers\\BringServiceProvider"
+          ],
+          "aliases": {
+            "Bring": "Apility\\Bring\\Facades\\Bring"
+          }
+        }
     }
 }
