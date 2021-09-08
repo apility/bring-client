@@ -10,15 +10,14 @@ use Apility\Bring\Exceptions\BringException;
 use Apility\Bring\Exceptions\NonExistingPostalCode;
 use Apility\Bring\Exceptions\UnsupportedCountryCode;
 
-use Netflex\API\Client as APIClient;
+use Netflex\Http\Client as HttpClient;
 
-use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
 
 use Illuminate\Support\Str;
 
-class Client extends APIClient
+class Client extends HttpClient
 {
     const NORWAY = 'NO';
     const DENMARK = 'DK';
@@ -38,10 +37,9 @@ class Client extends APIClient
     /** @var String */
     const BASE_URI = 'https://api.bring.com/pickuppoint/api/';
 
-    public function setCredentials(array $options = [])
-    {
-        $options['base_uri'] = static::BASE_URI;
-
+    public function __construct(array $options = []) {
+        $options['base_uri'] = $options['base_uri'] ?? static::BASE_URI;
+        
         if (isset($options['login_id']) && isset($options['api_key'])) {
             $options['headers'] = [
                 'X-MyBring-API-Uid' => $options['login_id'],
@@ -59,9 +57,7 @@ class Client extends APIClient
 
         $options['handler'] = $stack;
 
-        $this->client = new GuzzleClient($options);
-
-        return $this->client;
+        parent::__construct($options);
     }
 
     public function lookupPostalCodeOrFail($postalCode, $countryCode = Client::NORWAY)
